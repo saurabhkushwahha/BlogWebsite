@@ -10,16 +10,32 @@ import Quote from  "@editorjs/quote"
 import   SimpleImage   from "@editorjs/simple-image"
 
 export  const Tool={
-    code : Code,
-    header : Header,
-    image: SimpleImage,
+    code : {
+        class:Code,
+        inlineToolbar:true,
+    },
+    header :{
+       class:Header,
+       config:{
+         levels:[2,3],
+         default:2
+       }
+    },
+
     embed : Embed,
     link : Link,
     inlineTool : InlineTool,
     marker: Marker,
-    list: List,
-    quote:Quote,
+    list:{
+        class:List,
+        inlineToolbar:true
+    },
+    quote:{
+        class:Quote,
+        inlineToolbar:true
+    },
     simpleImage:SimpleImage,
+
 
 }
 

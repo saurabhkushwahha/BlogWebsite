@@ -25,7 +25,7 @@ function App() {
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/" replace />} />
           <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/" replace />} />
           <Route path="/" element={user ? <Home /> : <Navigate to="/login" replace />} />
-          <Route path="/createPost" element={<CreatePost/>} />
+          <Route path="/createPost" element={user ?<CreatePost/> : <Login/>} />
         </Routes>
         <Toaster
           position="top-right"

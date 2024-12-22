@@ -9,6 +9,7 @@ function CreatePost() {
 
   //TODO: using the state to change the ( New_Post ==> BlogTitle) use something useRef If it's possible.....
 
+  const [navTitle,setNavTitle]=useState();
   // useEffect
 
 
@@ -22,9 +23,11 @@ function CreatePost() {
 
   const handleTitleChange=(e)=>{
       let input =e.target
+
      console.log(input.scrollHeight)
     //  input.style.height='auto'
      input.style.height=`${input.scrollHeight}px`
+     setNavTitle(e.target.value)
   }
 
 
@@ -42,18 +45,13 @@ function CreatePost() {
 
   }
 
-  useEffect(()=>{
-
-  console.log(document.getElementById("title").value)
-  })
-
 
 
   return (
     <>
-    <Navbar/>
+    <Navbar navTitle={navTitle}/>
     <div className='relative overflow-hidden text-white mx-auto px-4 pt-16 bg-transparent bg-opacity-0'>
-      <div className='container mx-auto  py-4 px-4 max-w-3xl  '>
+      <div className='container  mx-auto  py-4 px-4 max-w-3xl  '>
            <div className='blogBanner relative aspect-video hover:bg-opacity-80 border border-slate-300/55 rounded '>
            <label htmlFor="blogBanner">
             <img src={defaultBlogBanner} ref={uploadRef} />
@@ -70,15 +68,15 @@ function CreatePost() {
            <textarea
            name="title"
            id="title"
-           ref={titleRef}
            placeholder='Blog Title'
             onChange={handleTitleChange}
             onKeyDownCapture={handlekeydown}
-           className='outline-none  text-4xl font-medium placeholder:opacity-40  resize-none px-4 py-3 h-16 w-full leading-tight bg-transparent rounded  mt-16 '
+           className='outline-none  text-4xl font-medium placeholder:opacity-40  resize-none px-4 py-3 h-16 w-full leading-tight bg-transparent rounded ml-5  mt-16 '
            />
 
-
+         {/* Editor */}
         <Editor/>
+
       </div>
     </div>
     </>

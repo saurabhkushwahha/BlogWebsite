@@ -17,7 +17,7 @@
   background-color: rgba(0, 0, 0, 0.87);
 
 }
-.cdx-simple-image .cdx-input {
+.cdx-simple-image .cdx-input,.cdx-quote__caption {
     @apply !border-none !outline-none !hidden;
 }
 

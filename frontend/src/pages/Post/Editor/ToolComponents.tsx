@@ -25,7 +25,11 @@ export  const Tool={
     embed : Embed,
     link : Link,
     inlineTool : InlineTool,
-    marker: Marker,
+    marker: {
+        class:Marker,
+        inlineToolbar:true,
+    },
+
     list:{
         class:List,
         inlineToolbar:true

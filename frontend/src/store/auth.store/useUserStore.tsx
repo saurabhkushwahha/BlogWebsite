@@ -38,7 +38,6 @@ export const useUserStore= create<UserStore>((set,_get)=>({
         set({isLoading:true})
 
         const response= await axios.post('/auth/signup',{email,password,fullName})
-        console.log("ahsu login")
         toast.success(response.data.message)
       } catch (err) {
         set({isError:true})

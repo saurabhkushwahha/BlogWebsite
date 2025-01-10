@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate} from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import AvatarProfile from "../AvatarProfile/AvatarProfile"
 import { useUserStore } from '@/store/auth.store/useUserStore'
@@ -9,6 +9,8 @@ function DropDownMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
+
+  const navigate=useNavigate()
 
   useEffect(() => {
     const closeDropdown = (e: MouseEvent) => {
@@ -20,6 +22,12 @@ function DropDownMenu() {
     document.addEventListener('click', closeDropdown);
     return () => document.removeEventListener('click', closeDropdown);
   }, [isOpen]);
+
+  const handleLogout=(e)=>{
+    e.stopPropagation()
+    logout()
+    navigate('/login')
+  }
 
   const dropdownVariants = {
     hidden: {
@@ -86,7 +94,7 @@ function DropDownMenu() {
                 variants={itemVariants}
                 className='w-full px-2 py-2 cursor-pointer hover:bg-zinc-800 rounded transition-colors duration-200'
               >
-                <a className='block p-2' onClick={(e) => { e.stopPropagation(); logout(); }}>Logout</a>
+                <a className='block p-2' onClick={handleLogout}>Logout</a>
               </motion.li>
             </ul>
           </motion.div>

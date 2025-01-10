@@ -10,9 +10,7 @@ import customError from './utils/customErrorHandler.js';
 
 const app=express()
 
-dotenv.config({
-   path:'./env'
-})
+dotenv.config()
 
 const PORT= process.env.PORT || 5000
 
@@ -27,6 +25,16 @@ app.use(cors({
    credentials:true
 }))
 
+//api
+
+app.use('/api/auth',authRoutes)
+app.use('/api/user',userRoutes)
+app.use('/api/post',postRoutes)
+
+
+
+
+
 // Catch all route handler for undefined routes
 app.all('*',(req,res,next)=>{
     return next( new customError(404,`Path Not Found ${req.originalUrl} on Server`))
@@ -34,11 +42,6 @@ app.all('*',(req,res,next)=>{
 
 
 
-//api
-
-app.use('/api/auth',authRoutes)
-app.use('/api/user',userRoutes)
-app.use('/api/post',postRoutes)
 
 
 

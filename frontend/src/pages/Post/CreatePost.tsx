@@ -10,9 +10,17 @@ function CreatePost() {
   //TODO: using the state to change the ( New_Post ==> BlogTitle) use something useRef If it's possible.....
 
   const [navTitle,setNavTitle]=useState();
+  const [image,setImage]=useState()
+  const [editorData,setEditorData]=useState()
   // useEffect
 
 
+
+   const handlePost=()=>{
+       console.log("Title Post :",navTitle)
+        console.log("Image in Base64 string data url :",image)
+        console.log("Editor data in json format:",editorData)
+   }
 
   const handlekeydown=(e)=>{
     if (e.key==='Enter'||e.keyCode==13)
@@ -24,7 +32,7 @@ function CreatePost() {
   const handleTitleChange=(e)=>{
       let input =e.target
 
-     console.log(input.scrollHeight)
+    //  console.log(input.scrollHeight)
     //  input.style.height='auto'
      input.style.height=`${input.scrollHeight}px`
      setNavTitle(e.target.value)
@@ -32,14 +40,29 @@ function CreatePost() {
 
 
   const handleUpload= async(e)=>{
-     let Image= null
      const file=e.target.files[0]
      if(file){
-        const reader=new FileReader()
-        reader.onloadend=async()=>{
-          uploadRef.current.src= reader.result
-          Image=reader.result
+
+        if(!file.type.startsWith('image/')){
+          alert("Please Upload an image file");
+          return;
         }
+
+        const reader=new FileReader()
+
+        reader.onloadend=async()=>{
+          if(uploadRef.current){
+          uploadRef.current.src= reader.result
+          }
+          setImage(reader.result)
+
+        }
+
+      reader.onerror=()=>{
+         console.log("There is an error uploading the banner")
+         alert("Uploading Banner Error!")
+      }
+
         reader.readAsDataURL(file)
      }
 
@@ -54,6 +77,7 @@ function CreatePost() {
       <div className='container  mx-auto  py-4 px-4 max-w-3xl  '>
            <div className='blogBanner relative aspect-video hover:bg-opacity-80 border border-slate-300/55 rounded '>
            <label htmlFor="blogBanner">
+
             <img src={defaultBlogBanner} ref={uploadRef} />
                <input
                type="file"
@@ -75,8 +99,8 @@ function CreatePost() {
            />
 
          {/* Editor */}
-        <Editor/>
-
+        <Editor />
+         <button className='px-4 py-3 rounded bg-blue-500 text-white'>check blog data</button>
       </div>
     </div>
     </>

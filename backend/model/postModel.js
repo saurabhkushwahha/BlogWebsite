@@ -21,14 +21,12 @@ const postSchema= new mongoose.Schema({
 
    description:{
      type:String,
-     required:true,
      trim:true
    },
 
    content:{
-    type:String,
+    type:mongoose.Schema.Types.Mixed,
     required:true,
-    trim:true
    },
 
    tags:{

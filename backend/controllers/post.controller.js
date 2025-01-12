@@ -3,22 +3,44 @@ import cloudinary from "../lib/cloudinary.js";
 
 
 
-export const createPost=async(req,res)=>{
-   try {
-    const {postUserId,title, Image,description,content}=req.body
-    if(Image){
-       const cloudinary_response= await cloudinary.uploader.upload(uploadImage,{folder:"BlogWebsiteUploadImage"})
-        //FIXME: image fixed and the  cloudinary_response?.url ? cloudinary_response.url:""
+export const createPost = async (req, res) => {
+  try {
+    const { id: postUserId } = req.user;
+    const { title, image, content } = req.body;
 
-     const uploadImage=cloudinary_response?.url ? cloudinary_response.url : ""
-     const post= await postModel.create({postUserId,title,uploadImage,description,content})
-      res.status(201).json(post)
+    if(!title || !content ){
+      return res.status(400).json({message:"Title & Content are required!"});
     }
 
+    let uploadImage="";
 
-   } catch (err) {
-     res.status(500).json({"message":err.message});
-   }
+    if (image) {
+        try {
+          const {url}= await cloudinary.uploader.upload(image,
+            {
+              folder:"BlogWebsiteUploadImage",
+            });
+
+            uploadImage=url;
+        } catch (cloudinaryError) {
+         console.error("Cloudinary Error:",cloudinaryError)
+         res.status(500).json({message:"Image upload Failed.Try again later !"})
+        }
+
+    }
+
+    // create post
+  const response=await postModel.create({postUserId,title,uploadImage,content})
+  return res.status(200).json({
+     success:true,
+     message:"Post created successfully",
+     post:response,
+  })
+
+  } catch (err) {
+    console.error("Post creation error:",err.message)
+    res.status(500).json({ "message": err.message });
+  }
 }
 
 

@@ -6,6 +6,9 @@ import { Toaster } from 'react-hot-toast'
 import { Route, Routes, Navigate } from "react-router-dom"
 import { useUserStore } from "./store/auth.store/useUserStore.tsx"
 import { useEffect } from "react"
+import Dashboard from "./pages/dashboard/Dashboard.tsx"
+import Profile from "./pages/profile/profile.tsx"
+import Layout from "./pages/Layout.tsx"
 
 function App() {
   const { user, isLoading, checkAuth } = useUserStore();
@@ -24,8 +27,14 @@ function App() {
         <Routes>
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/" replace />} />
           <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/" replace />} />
-          <Route path="/" element={user ? <Home /> : <Navigate to="/login" replace />} />
-          <Route path="/createPost" element={user ?<CreatePost/> : <Login/>} />
+
+          <Route path="/" element={user ? <Layout /> : <Navigate to="/login" replace />} >
+            <Route index path="/" element={<Home />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="createPost" element={<CreatePost />} />
+          </Route>
+
         </Routes>
         <Toaster
           position="top-right"

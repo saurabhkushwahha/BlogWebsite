@@ -1,5 +1,6 @@
 import postModel from "../model/postModel.js"
 import cloudinary from "../lib/cloudinary.js";
+import mongoose from "mongoose";
 
 
 
@@ -43,4 +44,47 @@ export const createPost = async (req, res) => {
   }
 }
 
+//singlepost
+export const singlePost=async (req,res)=>{
+  try {
+    const {id:postId}=req.query
+     const response= await postModel.findById(postId).populate('postUserId')
+     res.status(200).json(response)
 
+  } catch (err) {
+    console.error("Error getting Post:",err.message)
+    res.status(500).json({"message":err.message})
+  }
+}
+
+//getAllPost by specific user not work if you not use the query parameter ?userId=6780ce65bee0ce415af7a3a2
+export const getAllPost=async(req,res)=>{
+   try {
+     const {userId}=req.query
+     console.log(userId)
+    // const response= await postModel.find({postUserId:userId},{_id:1,title:1})
+
+
+    // userId is string type so we need to change the string to objec type
+    const objectId= new mongoose.Types.ObjectId(userId)
+    const response= await postModel.aggregate([
+      {
+        $match:{postUserId:objectId},
+      },
+      {
+         $project:{
+           _id:1,
+           title:1,
+           uploadImage:1,
+         }
+      }
+    ])
+
+    res.status(200).json(response)
+
+   } catch (err) {
+    console.error("Error getting all post",err.message)
+    res.status(500).json({"messgae":err.message})
+
+   }
+}

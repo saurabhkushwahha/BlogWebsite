@@ -20,7 +20,7 @@ function Navbar({navTitle,handlePost}:props) {
 
           </div>
           <nav className='flex items-center flex-wrap gap-4'>
-          <motion.button whileTap={{scale:0.7}} whileHover={{scale:1.02}} transition={{type:"spring" ,stiffness:300,damping:24}} className='rounded-full px-3 py-1 border border-slate-600 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:100%_100%] font-medium text-slate-400 transition-colors focus:outline-none focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50' onClick={handlePost}>Publish</motion.button>
+          <motion.button whileTap={{scale:1.09}}  className='rounded-full px-3 py-1 border border-slate-600 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:100%_100%] font-medium text-slate-400 transition-colors focus:outline-none focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50' onClick={handlePost}>Publish</motion.button>
             {/* Drop down menu */}
             <DropDownMenu />
           </nav>

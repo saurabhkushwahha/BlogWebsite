@@ -1,14 +1,18 @@
-import { useEffect, useRef } from 'react'
+import { useEffect,useState, useRef } from 'react'
 import axiosInstance from '@/lib/Axios/Axios'
+import { useParams } from 'react-router-dom'
 import EditorJS from '@editorjs/editorjs'
-import Editor from './Editor/Editor'
 import { Tool } from './Editor/ToolComponents'
 const GetPost = () => {
   const editorRef = useRef(null)
+  const uploadRef=useRef(null)
   const [isLoading, setLoading] = useState(true)
-  const [data, setData] = useState()
+  const [editorData, setEditorData]=useState()
   const [isError, setError] = useState()
-  const id = "15%20%2024"
+  const  {id}=useParams()
+  const [title,setTitle]=useState()
+
+
   useEffect(() => {
     let isMounted = true
 
@@ -16,9 +20,12 @@ const GetPost = () => {
     async function fetchData() {
       setLoading(true)
       try {
-        const response = await axiosInstance.get(`/api/post/getPost/${id}`)
+        const response= await axiosInstance.get(`http://localhost:3000/api/post/getPost?id=${id}`)
         if (isMounted) {
-          setData(response.data)
+          setEditorData(response.data.content)
+          setTitle(response.data.title)
+           uploadRef.current.src=response.data.uploadImage
+          console.log(response.data,"frontend")
         }
 
       } catch (error) {
@@ -44,28 +51,33 @@ const GetPost = () => {
 
   useEffect(() => {
 
-    if (!editorRef.current && data) {
+    if (!editorRef.current && editorData) {
       editorRef.current = new EditorJS({
         holder: "textEditor",
-        data: editorData,//yaha mai bacha hai
+        data: editorData,
+        tools:Tool,
         readOnly: true
       })
     }
 
 
     return () => {
-      editorRef.current.destroy();
+      if(editorRef.current){
+      editorRef.current.destory();
       editorRef.current = null
+      }
     }
 
-  }, [data])
+  }, [editorData])
 
   return (
-    <div>
-      <div className='blogBanner relative aspect-video hover:bg-opacity-80 border border-slate-300/55 rounded '>
-          <img src={defaultBlogBanner} ref={uploadRef} />
+    <>
+      <div className='blogBanner relative aspect-video hover:bg-opacity-80 border border-slate-300/5 rounded '>
+          <img src="" ref={uploadRef} />
+      <h1 className='font-bold text-4xl text-muted text-wrap mt-3'>{title}</h1>
+      <div id="textEditor"></div>
       </div>
-    </div>
+    </>
   )
 
 

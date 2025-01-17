@@ -19,7 +19,7 @@ const Sidebar = ({isOpen,setOpen}) => {
       initial={{ x: -100 }}
       animate={{ x: 0 }}
       transition={{duration:0.5, delay:0.1 ,ease:"easeInOut"}}
-      className="fixed h-screen w-64 inset-x-0 shadow-xl ring-1 ring-zinc-800 ">
+      className="fixed left-0 top-14 h-screen w-64  shadow-xl ring-1 ring-zinc-800 ">
       <motion.nav
        className="flex flex-col  ">
         { item.map((element, i) => (

@@ -5,7 +5,7 @@ const router=express.Router()
 
 
 router.post('/createPost',protectedRoute ,createPost)
-router.get('/getPost',singlePost)
+router.get('/getPost/:id',protectedRoute,singlePost)
 router.get('/getAllPost',getAllPost)
 // router.post('/editPost',editPost)
 // router.get('/categoryPost/:cateogry',categoryPost) //TODO: using_(req.params.category)

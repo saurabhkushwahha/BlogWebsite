@@ -5,7 +5,7 @@ import DropDownMenu from '../DropDownMenu/DropDownMenu.tsx'
 function Navbar({isOpen,setOpen}) {
 
   return (
-    <div className=' fixed left-0 top-0 w-full  bg-opacity-0 sm:backdrop-blur-md shadow-md z-40 transition-all duration-300 border-b border-zinc-800/40'>
+    <div className='fixed top-0 left-0  w-full  bg-opacity-0 sm:backdrop-blur-md shadow-md z-40 transition-all duration-300 border-b border-zinc-800/40'>
       <div className='container mx-auto sm:px-4 py-2 px-1 sm:py-2'>
         <div className='flex items-center justify-between flex-wrap'>
           {/* Logo */}

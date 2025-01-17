@@ -9,6 +9,7 @@ import { useEffect } from "react"
 import Dashboard from "./pages/dashboard/Dashboard.tsx"
 import Profile from "./pages/profile/profile.tsx"
 import Layout from "./pages/Layout.tsx"
+import GetPost from "./pages/Post/GetPost.tsx"
 
 function App() {
   const { user, isLoading, checkAuth } = useUserStore();
@@ -28,11 +29,12 @@ function App() {
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/" replace />} />
           <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/" replace />} />
 
-          <Route path="/" element={user ? <Layout /> : <Navigate to="/login" replace />} >
-            <Route index path="/" element={<Home />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="createPost" element={<CreatePost />} />
+          <Route path="/" element={user ? <Layout/> : <Navigate to="/login" replace />} >
+            <Route index path="/" element={<Home/>}/>
+            <Route path="dashboard" element={<Dashboard/>}/>
+            <Route path="profile" element={<Profile/>}/>
+            <Route path="createPost" element={<CreatePost/>}/>
+            <Route path="getPost/:id" element={<GetPost/>}/>
           </Route>
 
         </Routes>

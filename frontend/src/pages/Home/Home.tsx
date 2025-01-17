@@ -7,6 +7,14 @@ function Home() {
   return (
     <>
       <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
 
 
     </>

@@ -7,7 +7,7 @@ const GetPost = () => {
   const editorRef = useRef(null)
   const uploadRef=useRef(null)
   const [isLoading, setLoading] = useState(true)
-  const [editorData, setEditorData]=useState()
+  const [editorData, setEditorData]=useState();
   const [isError, setError] = useState()
   const  {id}=useParams()
   const [title,setTitle]=useState()

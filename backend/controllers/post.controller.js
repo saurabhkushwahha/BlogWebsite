@@ -49,7 +49,6 @@ export const singlePost=async (req,res)=>{
   try {
     const {id:postId}=req.query
      const response= await postModel.findById(postId).populate('postUserId')
-     console.log(response)
      res.status(200).json(response)
 
   } catch (err) {

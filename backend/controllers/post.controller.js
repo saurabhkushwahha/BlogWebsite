@@ -60,8 +60,7 @@ export const singlePost=async (req,res)=>{
 //getAllPost by specific user not work if you not use the query parameter ?userId=6780ce65bee0ce415af7a3a2
 export const getAllPost=async(req,res)=>{
    try {
-     const {userId}=req.query
-     console.log(userId)
+    const {_id:userId}=req.user
     // const response= await postModel.find({postUserId:userId},{_id:1,title:1})
 
 

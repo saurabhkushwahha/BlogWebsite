@@ -20,7 +20,8 @@ type UserStore={
    signup: ({email,password,fullName}:User)=>Promise<void>,
    login:({email,password}:LoginCredentials)=>Promise<void>,
    logout:()=>Promise<void>,
-   checkAuth:()=>Promise<void>
+   checkAuth:()=>Promise<void>,
+   editProfile:({username,fullName})=>Promise<void>,
 }
 
 
@@ -86,7 +87,21 @@ export const useUserStore= create<UserStore>((set,_get)=>({
       } catch (err) {
        console.log(err)
       }
-   }
+   },
+
+   //editProfile
+   editProfile:async({username,fullName})=>{
+      try {
+
+         const response=await axios.post('/user/editProfile',{username,fullName})
+         set({user:response})
+
+      } catch (error) {
+        set({isError:true})
+        console.log("Error in Updating profile:",error)
+      }
+
+   },
 
 
 }))

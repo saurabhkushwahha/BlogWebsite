@@ -25,7 +25,6 @@ const GetPost = () => {
           setEditorData(response.data.content)
           setTitle(response.data.title)
            uploadRef.current.src=response.data.uploadImage
-          console.log(response.data,"frontend")
         }
 
       } catch (error) {
@@ -61,12 +60,12 @@ const GetPost = () => {
     }
 
 
-    return () => {
-      if(editorRef.current){
-      editorRef.current.destory();
-      editorRef.current = null
-      }
-    }
+    // return () => {
+    //   if(editorRef.current){
+    //   editorRef.current.destory();
+    //   editorRef.current = null
+    //   }
+    // }
 
   }, [editorData])
 
@@ -74,9 +73,9 @@ const GetPost = () => {
     <>
       <div className='blogBanner relative aspect-video hover:bg-opacity-80 border border-slate-300/5 rounded '>
           <img src="" ref={uploadRef} />
-      <h1 className='font-bold text-4xl text-muted text-wrap mt-3'>{title}</h1>
-      <div id="textEditor"></div>
       </div>
+      <h1 className='font-bold text-3xl sm:text-5xl text-muted-foreground text-center sm:text-start my-4'>{title}</h1>
+      <div id="textEditor"></div>
     </>
   )
 

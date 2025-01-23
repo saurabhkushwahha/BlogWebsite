@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import Image from '@/components/godshiv.png'
 import { Link } from 'react-router-dom';
 
 
@@ -34,7 +33,7 @@ const Cardblog = ({data}) => {
                 <span className="text-zinc-600">
                   {ele.username}
                 </span>
-                <Link to={`/getPost/${ele.date}`}>Read more</Link>
+                <Link to={`/getPost/${ele._id}`}>Read more</Link>
               </div>
             </CardFooter>
           </Card>

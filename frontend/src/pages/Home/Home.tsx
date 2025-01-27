@@ -15,7 +15,7 @@ function Home() {
  }
   return (
     <>
-      <Card data={data}/>
+      <Card  data={data}/>
     </>
   )
 }

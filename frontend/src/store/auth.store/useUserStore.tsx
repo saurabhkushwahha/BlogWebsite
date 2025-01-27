@@ -21,7 +21,7 @@ type UserStore={
    login:({email,password}:LoginCredentials)=>Promise<void>,
    logout:()=>Promise<void>,
    checkAuth:()=>Promise<void>,
-   editProfile:({username,fullName})=>Promise<void>,
+   // editProfile:({username,fullName})=>Promise<void>,
 }
 
 
@@ -60,6 +60,7 @@ export const useUserStore= create<UserStore>((set,_get)=>({
          toast.success(response.data.message)
       } catch (err) {
         set({isError:true})
+        console.log(err.message)
         toast.error("Login Failed!")
       }
       finally{
@@ -90,14 +91,16 @@ export const useUserStore= create<UserStore>((set,_get)=>({
    },
 
    //editProfile
-   editProfile:async({username,fullName})=>{
+   editProfile:async({username,fullName,bio,profileImage})=>{
       try {
 
-         const response=await axios.post('/user/editProfile',{username,fullName})
+         const response=await axios.post('/user/editProfile',{username,fullName,bio,profileImage})
          set({user:response})
+         toast.success("save Profile")
 
       } catch (error) {
         set({isError:true})
+        toast.error("Error in Saving")
         console.log("Error in Updating profile:",error)
       }
 

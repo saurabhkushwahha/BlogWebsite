@@ -10,12 +10,11 @@ import { Link } from 'react-router-dom';
 
 
 const Cardblog = ({data}) => {
-
   return (
     <>
       {data?.map((ele) => (
         <>
-          <Card className="bg-black text-white cursor-alias border-b-2 border-zinc-900/55 rounded-none ">
+          <Card key={ele._id}   className="bg-black text-white cursor-alias border-b-2 border-zinc-900/55 rounded-none ">
             <CardHeader className="flex gap-1 sm:justify-center md:flex-row">
               <div className="flex gap-1 flex-col">
 

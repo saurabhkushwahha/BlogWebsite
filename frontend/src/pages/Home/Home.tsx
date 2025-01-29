@@ -5,9 +5,9 @@ import Loding from "../Loding";
 
 
 function Home() {
-  const {data,getAllPost}=usePostStore()
+  const {data,getAllPostHome}=usePostStore()
   useEffect(()=>{
-    getAllPost()
+    getAllPostHome()
   },[])
 
  if(!data){

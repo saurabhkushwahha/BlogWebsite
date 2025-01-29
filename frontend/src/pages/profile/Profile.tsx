@@ -64,7 +64,7 @@ const Profile:React.FC = () => {
         <input type="file" accept="image/*" className="hidden" id="profileImage" onChange={handleProfileImage} />
 
         <label htmlFor="profileImage" className="relative rounded-full group  mx-auto w-28 h-28">
-        <Avatar className="w-full h-full group-hover:border group-hover:border-white">
+        <Avatar className="w-full h-full group-hover:border-2 group-hover:opacity-80  group-hover:border-white">
          <AvatarImage  src={userData.profileImage} className="object-cover"/>
         </Avatar>
          <CameraIcon className="absolute z-40 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"/>
@@ -72,7 +72,7 @@ const Profile:React.FC = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-5">
             <Input
-              placeholder="username"
+              placeholder="@username"
               name="username"
               id="username"
               type="text"
@@ -96,7 +96,7 @@ const Profile:React.FC = () => {
               value={userData.bio}
               onChange={handleChange}
             />
-            <Button type="submit" className="mx-auto w-full" >Edit Profile</Button>
+            <Button type="submit" className="mx-auto w-full" >Save Changes</Button>
           </form>
         </CardContent>
       </Card>

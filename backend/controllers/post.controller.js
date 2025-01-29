@@ -64,7 +64,7 @@ export const getAllPost=async(req,res)=>{
     // const response= await postModel.find({postUserId:userId},{_id:1,title:1})
 
 
-    // userId is string type so we need to change the string to objec type
+    // userId is string type so we need to change the string to object type
     const objectId= new mongoose.Types.ObjectId(userId)
     const response= await postModel.aggregate([
       {
@@ -75,15 +75,32 @@ export const getAllPost=async(req,res)=>{
            _id:1,
            title:1,
            uploadImage:1,
+           description:1,
+           content:1,
+           tags:1,
+           likes:1,
+           createdAt:1,
          }
       }
-    ])
+    ]).sort({"createdAt":-1})
 
     res.status(200).json(response)
 
    } catch (err) {
     console.error("Error getting all post",err.message)
-    res.status(500).json({"messgae":err.message})
+    res.status(500).json({"messgae ": err.message})
 
+   }
+}
+
+
+export const getAllPostHome= async(req,res)=>{
+   try {
+      // const {_id:userId}=req.user    we are not using thing just use for authentication user valid or not
+      const response= await postModel.find({}).sort({"createdAt":-1}).populate("postUserId") // recent Post
+      res.status(200).json(response)
+   } catch (error) {
+     console.error("Error getting all post on home:",error.message)
+     res.status(500).json({"message ":error.message})
    }
 }

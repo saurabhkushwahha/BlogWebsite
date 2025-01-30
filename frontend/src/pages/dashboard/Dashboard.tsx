@@ -1,3 +1,4 @@
+import AlertDelete from '@/components/ResuableComponents/AlertDelete';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card'
 import { usePostStore } from '@/store/post.store/usePostStore';
 import React, { useEffect } from 'react'
@@ -116,46 +117,49 @@ import { Link } from 'react-router-dom';
 //     tag: ["Fashion", "Sustainability", "Lifestyle", "Trends", "Green"]
 //   }
 // ];
-const Dashboard:React.FC = () => {
+const Dashboard: React.FC = () => {
 
-const {getAllPost,data}=usePostStore()
-useEffect(()=>{
- getAllPost()
-},[])
+  const { getAllPost, data } = usePostStore()
+  useEffect(() => {
+    getAllPost()
+  }, [])
 
 
- const formatDate=(isoDate)=>{
-  return new Date(isoDate).toLocaleDateString("en-GB",{
-    day:"numeric",
-    month:"short",
-    year:"numeric"
-  })
- }
+  const formatDate = (isoDate) => {
+    return new Date(isoDate).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    })
+  }
   return (
     <>
       {
-        data?.map((item,idx) => (
+        data?.map((item, idx) => (
           <Card key={idx} className='p-4 rounded-none cursor-pointer dark border-b border-b-zinc-900'>
             <CardTitle className='font-bold '>
-                 {item.title}
+              {item.title}
             </CardTitle>
             <CardContent className=' flex flex-col  sm:flex-row space-x-2 space-y-2 items-center sm:items-start mt-2 p-1 overflow-hidden'>
               <div className='mt-1'>
-              <p>{item.desc}</p>
-               { /* TODO: USE THE TAGS WHEN ho databasae mai*/ }
-               {/* {item.tag?.map((t)=>(
+                <p>{item.desc}</p>
+                { /* TODO: USE THE TAGS WHEN ho databasae mai*/}
+                {/* {item.tag?.map((t)=>(
                 <button key={t} className='hidden sm:inline-block mr-1 mb-1 px-1 text-slate-100  rounded-full bg-blue-500'>#{t}</button>
               ))} */}
               </div>
-              <img src={item.uploadImage}  width={200} className='sm:block hidden object-contain' />
+              <img src={item.uploadImage} width={200} className='sm:block hidden object-contain' />
             </CardContent>
             <CardFooter className='p-0 sm:p-2 flex justify-between'>
               <span className='font-semibold italic '>
-              {formatDate(item.createdAt)}
+                {formatDate(item.createdAt)}
               </span>
-              <Link  to={`/editPost/${item._id}`} className='font-semibold italic hover:underline'>
-                Edit Post
-              </Link>
+              <div className='flex gap-3 items-center justify-center'>
+                <Link to={`/editPost/${item._id}`} className='font-semibold italic hover:underline '>
+                  Edit Post
+                </Link>
+                <AlertDelete id={item._id}/>
+              </div>
             </CardFooter>
           </Card>
 

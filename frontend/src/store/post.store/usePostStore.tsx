@@ -13,9 +13,11 @@ interface PostStore {
   isError: boolean,
   createPost: ({ title, image, content }: Post) => Promise<void>,
   editPost:({title,image,content}:Post)=>Promise<void>,
+  deletePost:(id)=>Promise<void>,
   getAllPost: () => Promise<void>,
   getAllPostHome: () => Promise<void>,
   getSinglePost:({id}:{id:string})=>Promise<void>,
+
 
 }
 
@@ -55,7 +57,21 @@ export const usePostStore = create<PostStore>((set, _get) => ({
    }
   },
 
-
+  deletePost:async(id)=>{
+    console.log(id,"usePoststroe")
+     try {
+       set({isLoading:true})
+        const response=await axios.delete(`post/deletePost?id=${id}`)
+        console.log(response)
+        toast.success("Post Deleted!!")
+     } catch (error) {
+       set({isError:true})
+       console.log("Error in Deleting the Post",error)
+     }
+     finally{
+      set({isLoading:false})
+     }
+  },
 
   getAllPost: async () => {
     try {

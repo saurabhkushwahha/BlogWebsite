@@ -44,6 +44,50 @@ export const createPost = async (req, res) => {
   }
 }
 
+// editPost
+export const editPost=async (req,res)=>{
+   try {
+    const {id:postUserId}=req.user  // ye id user ki hogi jo ki postModel mai save hoga
+    const {id,title,image,content}=req.body; // ismai mai
+
+    let uploadImage="";
+    if(image){
+       try {
+             const {url}=await cloudinary.uploader.upload(image,{
+              folder:"BlogWebsiteUploadImage",
+             })
+
+             uploadImage=url;
+
+       } catch (cloudinaryError) {
+        console.log("Error in editing post:",cloudinaryError)
+        res.status(500).json({"message":cloudinaryError.message})
+       }
+    }
+
+
+    const editData={
+        postUserId,
+        title,
+        uploadImage,
+        content
+    }
+
+    const response= await postModel.findOneAndUpdate(
+     {_id:id},
+     {$set:editData},
+     {new:true}
+    )
+
+    res.status(200).json(response)
+
+   } catch (err) {
+     console.error("Post Editing error",err.message)
+     res.status(500).json({"message":err.message})
+   }
+}
+
+
 //singlepost
 export const singlePost=async (req,res)=>{
   try {

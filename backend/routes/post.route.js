@@ -1,10 +1,11 @@
 import express from 'express'
-import { createPost ,singlePost,getAllPost,getAllPostHome} from '../controllers/post.controller.js'
+import { createPost,editPost ,singlePost,getAllPost,getAllPostHome} from '../controllers/post.controller.js'
 import {protectedRoute} from '../middleware/protectedRoute.js'
 const router=express.Router()
 
 
 router.post('/createPost',protectedRoute ,createPost)
+router.post('/editPost',protectedRoute,editPost)
 router.get('/getPost',protectedRoute,singlePost)
 router.get('/getAllPost',protectedRoute,getAllPost)
 router.get('/getAllPostHome',protectedRoute,getAllPostHome)

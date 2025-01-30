@@ -1,68 +1,60 @@
 import { useEffect, useRef, useState } from 'react'
 import Navbar from './NavbarEditor/NavbarEditor'
-// import Navbar from '@/components/ResuableComponents/Navbar/Navbar'
 import defaultBlogBanner from '../../resources/Images/BlogBanner.png'
-import Editor from './Editor/Editor'
 import { Tool } from './Editor/ToolComponents'
 import EditorJS from '@editorjs/editorjs';
 import { usePostStore } from '@/store/post.store/usePostStore'
 import { useParams } from 'react-router-dom'
+import axiosInstance from '@/lib/Axios/Axios';
 
 function EditPost() {
 
   const uploadRef = useRef()
-  const [isMounted,setIsMounted]=useState<boolean>(false)
+  const titleRef=useRef()
   const {id}=useParams()
-  const {createPost,data,getSinglePost}=usePostStore()
+  const {editPost,getSinglePost,data}=usePostStore()  // TODO: USE the usePostStore to call the data and use it
   const [navTitle, setNavTitle] = useState();
   const [image, setImage] = useState()
 
-  // useEffect
-
   const editorRef = useRef()
 
-  useEffect(()=>{
-    if(typeof window !== "undefined"){
-      setIsMounted(true)
-    }
-  },[])
-
-
-
+  // useEffect
   useEffect(() => {
 
     const init=async()=>{
-
-       await getSinglePost({id})
-       await initilizedEditorJs();
+      //  await getSinglePost({id})
+        const response=  await axiosInstance.get(`/post/getPost?id=${id}`)
+       if(response?.data){
+        setNavTitle(response.data?.title)
+        titleRef.current.value=response.data?.title
+        uploadRef.current.src=response.data?.uploadImage
+        initilizedEditorJs(response.data?.content);
+       }
     }
 
-    if(isMounted){
       init();
-    }
 
-    return () => {
-         if(editorRef.current){
-            editor.destroy();
-         }
-    }
+    // return () => {
+    //      if(editorRef.current){
+    //         editor.destroy();
+    //      }
+    // }
 
-  }, [isMounted]);
-
+  }, [id]);
 
 
 
-   const initilizedEditorJs=async()=>{
+
+   const initilizedEditorJs=async(content)=>{
      if(!editorRef.current){
-      console.log(data,"from the ")
       const editor = new EditorJS({
-      holder: 'textEditor',
-      data:data.content,
+      holder: "textEditor",
+      data:content,
       tools: Tool,
       });
 
-     }
       editorRef.current = editor
+     }
    }
 
 
@@ -78,12 +70,17 @@ function EditPost() {
 
 
   const handlePost = async () => {
+
     const savedData = await handleSave()
-     await createPost({
-      title:navTitle,
-      image:image,
-      content:savedData,
-    })
+       console.log("________________EditPost_______________")
+
+       await editPost({
+        id,
+        title:navTitle,
+        image,
+        content:savedData,
+      })
+
   }
 
   const handlekeydown = (e) => {
@@ -156,6 +153,7 @@ function EditPost() {
           <textarea
             name="title"
             id="title"
+            ref={titleRef}
             placeholder='Blog Title'
             onChange={handleTitleChange}
             onKeyDownCapture={handlekeydown}
@@ -163,7 +161,7 @@ function EditPost() {
           />
 
           {/* Editor */}
-          <Editor />
+         <div id="textEditor"></div>
         </div>
       </div>
     </>

@@ -1,4 +1,5 @@
 import axios from "@/lib/Axios/Axios";
+import toast from "react-hot-toast";
 import { create } from 'zustand'
 
 type Post = {
@@ -11,9 +12,11 @@ interface PostStore {
   isLoading: boolean,
   isError: boolean,
   createPost: ({ title, image, content }: Post) => Promise<void>,
+  editPost:({title,image,content}:Post)=>Promise<void>,
   getAllPost: () => Promise<void>,
   getAllPostHome: () => Promise<void>,
   getSinglePost:({id}:{id:string})=>Promise<void>,
+
 }
 
 
@@ -28,6 +31,7 @@ export const usePostStore = create<PostStore>((set, _get) => ({
       set({ isLoading: true })
       const response = await axios.post('/post/createPost', { title, image, content })
       set({ data: response.data.post })
+      toast.success("Post Created Successfully!")
     } catch (error) {
       set({ isError: true })
       console.log("Error in Creating Post", error)
@@ -35,6 +39,22 @@ export const usePostStore = create<PostStore>((set, _get) => ({
       set({ isLoading: false })
     }
   },
+
+  editPost:async({id,title,image,content})=>{
+   try {
+    set({isLoading:true})
+    const response=await axios.post(`/post/editPost`,{id,title,image,content})
+    console.log(response.data)
+    toast.success("Post Edited!!")
+
+   } catch (error) {
+     set({isError:true})
+     console.log("Error in editing Post:",error)
+   }finally{
+    set({isLoading:false})
+   }
+  },
+
 
 
   getAllPost: async () => {
